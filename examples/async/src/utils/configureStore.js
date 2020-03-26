@@ -1,16 +1,20 @@
 /* eslint-disable no-underscore-dangle */
-import { createStore, applyMiddleware } from 'redux';
-import { combineReducers } from 'redux-immutable';
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
-export default function configureStore(reducer) {
+export default function configureStore(reducer, initialState) {
+  let composeEnhancers = compose;
+  if (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) { composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}); }
   const sagaMiddleware = createSagaMiddleware();
+  const middlewares = [sagaMiddleware];
+  const enhancers = [applyMiddleware(...middlewares)];
+  const store = createStore(
+    combineReducers(reducer),
+    initialState,
+    composeEnhancers(...enhancers),
+  );
   return {
-    ...createStore(
-      combineReducers(reducer),
-      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-      applyMiddleware(sagaMiddleware),
-    ),
+    store,
     runSaga: sagaMiddleware.run,
   };
 }

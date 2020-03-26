@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { createStore } from 'redux';
-import { combineReducers } from 'redux-immutable';
+import { createStore, combineReducers } from 'redux';
 
 export default function configureStore(reducer) {
   return createStore(

@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { createStore, applyMiddleware } from 'redux';
-import { combineReducers } from 'redux-immutable';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
 export default function configureStore(reducer) {

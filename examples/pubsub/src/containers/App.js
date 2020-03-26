@@ -4,7 +4,6 @@ import { CONFIG } from './config';
 import resaga from '../../../../build';
 import Picker from '../components/Picker';
 import Posts from '../components/Posts';
-
 export class App extends PureComponent {
   state = {
     result: false,
@@ -12,11 +11,12 @@ export class App extends PureComponent {
 
   componentDidMount = () => this.handleChange('reactjs');
 
-  componentWillReceiveProps = (nextProps) =>
+  componentWillReceiveProps = (nextProps) => {
     this.props.resaga.analyse(
       nextProps,
       { fetchReddit: { before: this.beforeFetch, onSuccess: this.fetchSuccess } }
     );
+  };
 
   setOtherReddit = (payload) => {
     this.setState({ result: false });
